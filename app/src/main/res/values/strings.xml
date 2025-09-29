@@ -3,4 +3,20 @@
 
     <string name="login_fragment_label"></string>
     <string name="staff_list_fragment_label">Staff List</string>
+
+    <string name="common_generic_error_header">Error</string>
+    <string name="common_generic_error_msg">API failed. Please try again.</string>
+    <string name="common_confirm_btn">OK</string>
+
+    <string name="login_header">LOGIN</string>
+    <string name="login_email_placeholer">Email Address</string>
+    <string name="login_email_error">Invalid email.</string>
+    <string name="login_password_placeholer">Password</string>
+    <string name="login_password_error">Password should be 6-10 characters.</string>
+    <string name="login_cta_btn">Log in</string>
+    <string name="login_logging_in">Logging in...</string>
+
+    <string name="staff_list_token">Login token: %s</string>
+    <string name="staff_list_load_more_btn">Load More</string>
+
 </resources>
