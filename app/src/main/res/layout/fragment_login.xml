@@ -3,7 +3,88 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/general_padding"
     tools:context=".ui.login.LoginFragment">
 
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/Header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/login_header" />
+
+    <FrameLayout
+        android:id="@+id/loginEmailInputContainer"
+        style="@style/InputContainer">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/loginEmailInput"
+            style="@style/Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/login_email_placeholder"
+            android:inputType="textEmailAddress" />
+    </FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/loginEmailError"
+        style="@style/InlineError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_email_error" />
+
+    <FrameLayout
+        android:id="@+id/loginPwdInputContainer"
+        style="@style/InputContainer"
+        android:layout_marginTop="@dimen/general_padding">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/loginPwdInput"
+            style="@style/Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/login_password_placeholder"
+            android:inputType="textPassword"
+            android:maxLength="10" />
+    </FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/loginPwdError"
+        style="@style/InlineError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_password_error" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/loginCtaBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/general_padding"
+        android:background="@drawable/bg_cta_btn"
+        android:text="@string/login_cta_btn"
+        android:textColor="@android:color/white" />
+
+    <LinearLayout
+        android:id="@+id/loginLoadingContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/general_padding"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/login_logging_in" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </LinearLayout>

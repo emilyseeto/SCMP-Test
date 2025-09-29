@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.SCMPTest" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
@@ -6,4 +6,32 @@
     </style>
 
     <style name="Theme.SCMPTest" parent="Base.Theme.SCMPTest" />
+
+    <style name="Header" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textColor">@color/color_active</item>
+        <item name="android:textSize">36sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginBottom">36dp</item>
+    </style>
+
+    <style name="InlineError" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:textColor">@color/color_error</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="InputContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_input_inactive</item>
+    </style>
+
+    <style name="Input" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:textColor">@color/color_active</item>
+        <item name="android:textSize">24sp</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="hintTextColor">@color/color_inactive</item>
+    </style>
 </resources>
