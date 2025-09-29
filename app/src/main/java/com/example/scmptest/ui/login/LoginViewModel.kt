@@ -1,13 +1,21 @@
 package com.example.scmptest.ui.login
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.scmptest.R
+import com.example.scmptest.data.api.ApiService
+import com.example.scmptest.data.model.ApiError
+import com.example.scmptest.data.model.LoginRequest
 import com.example.scmptest.ext.orFalse
 import com.example.scmptest.ext.orZero
+import com.google.gson.Gson
+import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     private var _email = MutableLiveData<String>()
     val email: LiveData<String> = _email
@@ -24,12 +32,20 @@ class LoginViewModel : ViewModel() {
     private var _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private var _loginToken = MutableLiveData<String?>()
+    val loginToken: LiveData<String?> = _loginToken
+
+    private var _loginError = MutableLiveData<String?>()
+    val loginError: LiveData<String?> = _loginError
+
     init {
         _email.value = ""
         _pwd.value = ""
         clearEmailError()
         clearPwdError()
         _isLoading.value = false
+        _loginToken.value = null
+        _loginError.value = null
     }
 
     fun setEmail(email: String) {
@@ -50,6 +66,7 @@ class LoginViewModel : ViewModel() {
 
     fun login() {
         _isLoading.value = true
+        _loginError.value = null
 
         validateInputs()
 
@@ -58,7 +75,49 @@ class LoginViewModel : ViewModel() {
             return
         }
 
-        // TODO call api
+        viewModelScope.launch {
+            try {
+                val request = LoginRequest(
+                    email = email.value.orEmpty(),
+                    password = pwd.value.orEmpty()
+                )
+
+                val response = ApiService.scmpApi.login(request)
+                val genericError = getApplication<Application>().getString(R.string.common_generic_error_msg)
+
+                if (response.isSuccessful) {
+                    response.body()?.token.takeUnless { it.isNullOrEmpty() }?.let { token ->
+                        _loginToken.value = token
+                     } ?: run {
+                         _loginError.value = genericError
+                     }
+                 } else {
+                     response.errorBody()?.string()?.let { body ->
+                         try {
+                             val gson = Gson()
+                             val apiError = gson.fromJson(
+                                 body,
+                                 ApiError::class.java
+                             )
+                             _loginError.value = apiError.error ?: genericError
+                         } catch (e: Exception) {
+                             _loginError.value = e.message
+                         }
+                     } ?: run {
+                         _loginError.value = genericError
+                     }
+                 }
+             } catch (e: Exception) {
+                 _loginError.value = e.message
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun clearLoginStatus() {
+        _loginToken.value = null
+        _loginError.value = null
     }
 
     private fun validateInputs() {

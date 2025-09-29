@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.scmptest.R
 import com.example.scmptest.databinding.FragmentLoginBinding
 import com.example.scmptest.ext.orFalse
@@ -60,6 +62,32 @@ class LoginFragment : Fragment() {
                 isError = isError,
                 isFocused = binding.loginPwdInput.isFocused
             )
+        })
+
+        viewModel.loginToken.observe(viewLifecycleOwner, Observer { token ->
+            if (!token.isNullOrEmpty()) {
+                val bundle = Bundle().apply {
+                    putString("token", token)
+                }
+                findNavController().navigate(R.id.action_LoginFragment_to_StaffListFragment, bundle)
+                viewModel.clearLoginStatus()
+            }
+        })
+
+        viewModel.loginError.observe(viewLifecycleOwner, Observer { error ->
+            if (!error.isNullOrEmpty()) {
+                context?.let {
+                    AlertDialog.Builder(it)
+                        .setTitle(R.string.common_generic_error_header)
+                        .setMessage(error)
+                        .setPositiveButton(R.string.common_confirm_btn) { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        .setCancelable(false)
+                        .create()
+                        .show()
+                }
+            }
         })
     }
 
