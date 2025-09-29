@@ -18,5 +18,7 @@
 
     <string name="staff_list_token">Login token: %s</string>
     <string name="staff_list_load_more_btn">Load More</string>
+    <string name="staff_list_no_record">No record found.</string>
+    <string name="staff_list_loading_data">Loading data...</string>
 
 </resources>

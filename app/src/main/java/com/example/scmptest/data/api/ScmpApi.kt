@@ -2,8 +2,10 @@ package com.example.scmptest.data.api
 
 import com.example.scmptest.data.model.LoginRequest
 import com.example.scmptest.data.model.LoginResponse
+import com.example.scmptest.data.model.StaffListResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -13,4 +15,9 @@ interface ScmpApi {
         @Body request: LoginRequest,
         @Query("delay") delay: Int = 5
     ): Response<LoginResponse>
+
+    @GET("users")
+    suspend fun retrieveStaffList(
+        @Query("page") page: Int
+    ): Response<StaffListResponse>
 }

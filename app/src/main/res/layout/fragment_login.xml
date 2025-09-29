@@ -58,12 +58,9 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/loginCtaBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/Button"
         android:layout_marginTop="@dimen/general_padding"
-        android:background="@drawable/bg_cta_btn"
-        android:text="@string/login_cta_btn"
-        android:textColor="@android:color/white" />
+        android:text="@string/login_cta_btn" />
 
     <LinearLayout
         android:id="@+id/loginLoadingContainer"

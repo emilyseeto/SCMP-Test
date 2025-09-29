@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.scmptest.R
 import com.example.scmptest.databinding.FragmentLoginBinding
 import com.example.scmptest.ext.orFalse
+import com.example.scmptest.ext.showErrorDialog
 import com.example.scmptest.ext.visibleElseGone
 
 class LoginFragment : Fragment() {
@@ -42,6 +43,8 @@ class LoginFragment : Fragment() {
 
     private fun setupObservers() {
         viewModel.isLoading.observe(viewLifecycleOwner, Observer { isLoading ->
+            binding.loginEmailInput.isEnabled = !isLoading
+            binding.loginPwdInput.isEnabled = !isLoading
             binding.loginCtaBtn.isEnabled = !isLoading
             binding.loginLoadingContainer.visibleElseGone(isLoading)
         })
@@ -75,18 +78,8 @@ class LoginFragment : Fragment() {
         })
 
         viewModel.loginError.observe(viewLifecycleOwner, Observer { error ->
-            if (!error.isNullOrEmpty()) {
-                context?.let {
-                    AlertDialog.Builder(it)
-                        .setTitle(R.string.common_generic_error_header)
-                        .setMessage(error)
-                        .setPositiveButton(R.string.common_confirm_btn) { dialog, _ ->
-                            dialog.dismiss()
-                        }
-                        .setCancelable(false)
-                        .create()
-                        .show()
-                }
+            if (!error.isNullOrBlank()) {
+                context?.showErrorDialog(error)
             }
         })
     }

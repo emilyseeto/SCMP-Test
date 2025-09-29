@@ -7,11 +7,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.scmptest.R
 import com.example.scmptest.data.api.ApiService
-import com.example.scmptest.data.model.ApiError
 import com.example.scmptest.data.model.LoginRequest
+import com.example.scmptest.ext.getErrorMsg
 import com.example.scmptest.ext.orFalse
 import com.example.scmptest.ext.orZero
-import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
@@ -83,32 +82,20 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                 )
 
                 val response = ApiService.scmpApi.login(request)
-                val genericError = getApplication<Application>().getString(R.string.common_generic_error_msg)
+                val genericError =
+                    getApplication<Application>().getString(R.string.common_generic_error_msg)
 
                 if (response.isSuccessful) {
                     response.body()?.token.takeUnless { it.isNullOrEmpty() }?.let { token ->
                         _loginToken.value = token
-                     } ?: run {
-                         _loginError.value = genericError
-                     }
-                 } else {
-                     response.errorBody()?.string()?.let { body ->
-                         try {
-                             val gson = Gson()
-                             val apiError = gson.fromJson(
-                                 body,
-                                 ApiError::class.java
-                             )
-                             _loginError.value = apiError.error ?: genericError
-                         } catch (e: Exception) {
-                             _loginError.value = e.message
-                         }
-                     } ?: run {
-                         _loginError.value = genericError
-                     }
-                 }
-             } catch (e: Exception) {
-                 _loginError.value = e.message
+                    } ?: run {
+                        _loginError.value = genericError
+                    }
+                } else {
+                    _loginError.value = response.errorBody().getErrorMsg(genericError)
+                }
+            } catch (e: Exception) {
+                _loginError.value = e.message
             } finally {
                 _isLoading.value = false
             }
