@@ -3,4 +3,5 @@
     <color name="color_active">#242424</color>
     <color name="color_inactive">#A2A2A2</color>
     <color name="color_error">#FF0000</color>
+    <color name="color_overlay">#59000000</color>
 </resources>

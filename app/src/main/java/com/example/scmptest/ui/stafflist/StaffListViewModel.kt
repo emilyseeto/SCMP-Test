@@ -28,7 +28,6 @@ class StaffListViewModel(application: Application) : AndroidViewModel(applicatio
     private val staffList = mutableListOf<ListItem.Staff>()
 
     init {
-        _displayList.value = emptyList()
         _isLoading.value = false
         _error.value = null
     }

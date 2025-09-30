@@ -55,7 +55,7 @@ class StaffListFragment : Fragment() {
         })
 
         viewModel.isLoading.observe(viewLifecycleOwner, Observer { isLoading ->
-            // TODO show loading view
+            binding.staffListLoadingContainer.visibleElseGone(isLoading)
         })
 
         viewModel.error.observe(viewLifecycleOwner, Observer { error ->
