@@ -4,9 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.scmptest.data.model.ListItem
 import com.example.scmptest.databinding.ViewLoadMoreBinding
 import com.example.scmptest.databinding.ViewStaffItemBinding
+
 
 class StaffListAdapter(
     private val onLoadMoreClick: () -> Unit
@@ -29,7 +31,7 @@ class StaffListAdapter(
     override fun getItemViewType(position: Int): Int {
         return when (list[position]) {
             is ListItem.Staff -> VIEW_TYPE_STAFF
-            is ListItem.LoadMore -> VIEW_TYPE_LOAD_MORE
+            else -> VIEW_TYPE_LOAD_MORE
         }
     }
 
@@ -39,8 +41,7 @@ class StaffListAdapter(
     ): BaseViewHolder {
         return when (viewType) {
             VIEW_TYPE_STAFF -> createStaffViewHolder(parent)
-            VIEW_TYPE_LOAD_MORE -> createLoadMoreViewHolder(parent)
-            else -> throw IllegalArgumentException("Unknown view type: $viewType")
+            else -> createLoadMoreViewHolder(parent)
         }
     }
 
@@ -82,25 +83,16 @@ class StaffListAdapter(
 
         fun bind(staff: ListItem.Staff) {
             binding.apply {
-                staffItemName.text = buildStaffName(staff)
+                staffItemName.text = listOfNotNull(staff.first_name, staff.last_name)
+                    .joinToString(separator = " ")
                 staffItemEmail.text = staff.email.orEmpty()
-                loadStaffAvatar(staff.avatar)
+                staff.avatar.takeUnless { it.isNullOrBlank() }?.let {
+                    Glide.with(binding.root.context)
+                        .load(it)
+                        .circleCrop()
+                        .into(binding.staffItemAvatar)
+                }
             }
-        }
-
-        private fun buildStaffName(staff: ListItem.Staff): String {
-            return listOfNotNull(staff.first_name, staff.last_name)
-                .joinToString(separator = " ")
-                .takeIf { it.isNotBlank() } ?: "Unknown Staff"
-        }
-
-        private fun loadStaffAvatar(avatarUrl: String?) {
-            // TODO: Load avatar image using Glide or similar
-            // Glide.with(binding.root.context)
-            //     .load(avatarUrl)
-            //     .placeholder(R.drawable.ic_person_placeholder)
-            //     .error(R.drawable.ic_person_placeholder)
-            //     .into(staffItemAvatar)
         }
     }
 
@@ -115,4 +107,3 @@ class StaffListAdapter(
         }
     }
 }
-

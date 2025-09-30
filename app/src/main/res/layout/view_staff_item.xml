@@ -3,13 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_staff_item"
-    android:padding="16dp">
+    android:padding="@dimen/padding_medium">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/staffItemAvatar"
+    <FrameLayout
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginEnd="@dimen/padding_general">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/staffItemAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/border_avatar" />
+
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -23,7 +34,7 @@
             style="@style/Header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="@dimen/padding_small"
             android:textSize="24sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -31,7 +42,7 @@
             style="@style/Body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
 
     </LinearLayout>
 

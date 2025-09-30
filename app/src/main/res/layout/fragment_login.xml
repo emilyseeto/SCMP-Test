@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="@dimen/general_padding"
+    android:padding="@dimen/padding_general"
     tools:context=".ui.login.LoginFragment">
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -37,7 +37,7 @@
     <FrameLayout
         android:id="@+id/loginPwdInputContainer"
         style="@style/InputContainer"
-        android:layout_marginTop="@dimen/general_padding">
+        android:layout_marginTop="@dimen/padding_general">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/loginPwdInput"
@@ -59,7 +59,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/loginCtaBtn"
         style="@style/Button"
-        android:layout_marginTop="@dimen/general_padding"
+        android:layout_marginTop="@dimen/padding_general"
         android:text="@string/login_cta_btn" />
 
     <LinearLayout
@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/general_padding"
+        android:layout_marginTop="@dimen/padding_general"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone">
@@ -76,7 +76,7 @@
             style="@style/TextAppearance.AppCompat.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="@dimen/padding_small"
             android:text="@string/login_logging_in" />
 
         <ProgressBar

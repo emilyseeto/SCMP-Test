@@ -86,7 +86,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                     getApplication<Application>().getString(R.string.common_generic_error_msg)
 
                 if (response.isSuccessful) {
-                    response.body()?.token.takeUnless { it.isNullOrEmpty() }?.let { token ->
+                    response.body()?.token.takeUnless { it.isNullOrBlank() }?.let { token ->
                         _loginToken.value = token
                     } ?: run {
                         _loginError.value = genericError

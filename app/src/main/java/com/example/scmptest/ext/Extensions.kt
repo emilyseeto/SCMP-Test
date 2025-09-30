@@ -41,7 +41,7 @@ fun ResponseBody?.getErrorMsg(genericError: String): String =
         try {
             val gson = Gson()
             val apiError = gson.fromJson(body, ApiError::class.java)
-            apiError.error ?: genericError
+            apiError.error.takeUnless { it.isNullOrBlank() } ?: genericError
         } catch (e: Exception) {
             e.message ?: genericError
         }
