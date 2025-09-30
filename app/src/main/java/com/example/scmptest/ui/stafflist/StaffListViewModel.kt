@@ -1,6 +1,7 @@
 package com.example.scmptest.ui.stafflist
 
 import android.app.Application
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -24,8 +25,10 @@ class StaffListViewModel(application: Application) : AndroidViewModel(applicatio
     private var _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
-    private var pageCount: Int = 1
-    private val staffList = mutableListOf<ListItem.Staff>()
+    @VisibleForTesting
+    var pageCount: Int = 1
+    @VisibleForTesting
+    val staffList = mutableListOf<ListItem.Staff>()
 
     init {
         _isLoading.value = false
